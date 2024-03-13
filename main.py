@@ -1,9 +1,19 @@
-import hashlib, time
+import hashlib
+import time
 import plotly.graph_objects as go
 
-
-#Hash function with following param. Function includes time counting
+# Hash function with following param. Function includes time counting
 def Hash(sample, hash_type):
+    """
+    Hashes the given sample using the specified hash type and measures the time taken.
+
+    Parameters:
+        sample (bytes): The data to be hashed.
+        hash_type (str): The type of hash algorithm to use.
+
+    Returns:
+        tuple: A tuple containing the hashed result and the time taken for hashing.
+    """
     start_time = time.time()
     hash_algorithms = {
         'md5': hashlib.md5,
@@ -33,34 +43,32 @@ def Hash(sample, hash_type):
         result = h.hexdigest()
     end_time = time.time()
     xtime = end_time - start_time
-    return result,xtime
-
-
-# DATA
-file_path = './text'
-
-with open(file_path, "rb") as file:
-    sample = file.read()
-
-hash_types = ['sha224', 'sha256', 'sha384', 'sha512', 'md5', 'blake2b', 'blake2s',
-              'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512', 'shake128', 'shake256']
+    return result, xtime
 
 # Result for each hash type with diagram
+if __name__ == "__main__":
+    # DATA
+    file_path = './text'
 
-hashed_values = []
-time_results = []
+    with open(file_path, "rb") as file:
+        sample = file.read()
 
-for hash_type in hash_types:
-    hashed, time_result = Hash(sample, hash_type)
+    hash_types = ['sha224', 'sha256', 'sha384', 'sha512', 'md5', 'blake2b', 'blake2s',
+                  'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512', 'shake128', 'shake256']
 
-    hashed_values.append(hashed)
-    time_results.append(time_result)
+    hashed_values = []
+    time_results = []
 
-    print("Time result for {}: {:.6f} seconds, Hash: {}".format(hash_type, time_result, hashed))
+    for hash_type in hash_types:
+        hashed, time_result = Hash(sample, hash_type)
 
+        hashed_values.append(hashed)
+        time_results.append(time_result)
 
-fig = go.Figure(data=go.Bar(x=list(hash_types), y=list(time_results)))
-fig.update_layout(title='Time of generated data for every hash_type',
-                  xaxis_title='Hash Type',
-                  yaxis_title='Time (Sec)')
-fig.show()
+        print("Time result for {}: {:.6f} seconds, Hash: {}".format(hash_type, time_result, hashed))
+
+    fig = go.Figure(data=go.Bar(x=list(hash_types), y=list(time_results)))
+    fig.update_layout(title='Time of generated data for every hash_type',
+                      xaxis_title='Hash Type',
+                      yaxis_title='Time (Sec)')
+    fig.show()

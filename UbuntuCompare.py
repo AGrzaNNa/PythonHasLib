@@ -1,5 +1,15 @@
 import hashlib
+
 def Ubuntu(path):
+    """
+    Verifies the integrity of an Ubuntu ISO file by comparing its SHA256 hash.
+
+    Parameters:
+        path (str): The path to the Ubuntu ISO file.
+
+    Returns:
+        str: 'true' if the hash matches the expected value, 'false' otherwise.
+    """
     h = hashlib.sha256()
     with open(path, 'rb') as f:
         while True:
@@ -14,7 +24,7 @@ def Ubuntu(path):
         result = 'false'
     return result
 
-
+# Path to destination file
 file_path = './ubuntu-22.04.4-desktop-amd64.iso'
 # Compare calculated_Hash_of_ISO
 print('Compare hashed iso file : ', Ubuntu(file_path))
