@@ -27,4 +27,4 @@ def Ubuntu(path):
 # Path to destination file
 file_path = './ubuntu-22.04.4-desktop-amd64.iso'
 # Compare calculated_Hash_of_ISO
-print('Compare hashed iso file : ', Ubuntu(file_path))
+print('Compare hashed iso file  : ', Ubuntu(file_path))
